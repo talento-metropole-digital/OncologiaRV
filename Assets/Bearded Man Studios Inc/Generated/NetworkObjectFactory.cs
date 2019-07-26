@@ -43,6 +43,10 @@ namespace BeardedManStudios.Forge.Networking.Generated
 						availableCallback = true;
 						obj = new TestNetworkObject(networker, id, frame);
 						break;
+					case basicCube_sample1NetworkObject.IDENTITY:
+						availableCallback = true;
+						obj = new basicCube_sample1NetworkObject(networker, id, frame);
+						break;
 				}
 
 				if (!availableCallback)
