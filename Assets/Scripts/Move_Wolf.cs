@@ -15,13 +15,14 @@ public class Move_Wolf : MonoBehaviour
     public GameObject wolf;
     public MeshCollider mcl;
     public float jump_aux;
-    public Collider col;
+    //public Collider col;
 
     // Start is called before the first frame update
     void Start()
     {
         rgd = GetComponent<Rigidbody>();
-        mcl = GetComponent<MeshCollider>();
+        rgd.useGravity = true;
+        //mcl = GetComponent<MeshCollider>();
     }
 
     // Update is called once per frame
@@ -35,13 +36,10 @@ public class Move_Wolf : MonoBehaviour
         bool jump = Input.GetKey(key), up = Input.GetKey(key1),
                 down = Input.GetKey(key2), left = Input.GetKey(key3),
                 right = Input.GetKey(key4);
-        if (rgd.detectCollisions == true)
+        if (jump)
         {
-            if (jump)
-            {
-                Jump();
-            }
-
+            Console.WriteLine("Jump Sucess");
+            Jump();
         }
         if (up)
         {
@@ -59,27 +57,11 @@ public class Move_Wolf : MonoBehaviour
         {
             Wolf_walk(0f, rotateMove);
         }
-        if (rgd.detectCollisions == false)
-        {
-            Console.Out.WriteLine("Is not a Collision");
-            float r = wolf.transform.position.y;
-            wolf.transform.Translate(new Vector3(0, -gravity,0)*Time.deltaTime);
-
-        }
-        else {
-            Console.Out.WriteLine("Is a Collision");
-            rgd.drag = 0;
-        }
         
     }
     void Jump() {
         jump_aux = jump_factor;
-        transform.Translate(new Vector3(0, jump_aux, 0) * Time.deltaTime);
-        /*while (isGrounded == false)
-        {
-            transform.Translate(new Vector3(0, jump_aux, 0) * Time.deltaTime);
-            jump_aux -= jump_factor / 20;
-        }*/
+        rgd.AddForce(new Vector3(0, 20, 0), ForceMode.Impulse);
     }
     void Wolf_walk(float x1, float x2) {
         if (x1 != 0.0f) {
